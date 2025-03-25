@@ -2,8 +2,9 @@
 
 import React from "react";
 import { IconHome, IconUser, IconLogin, IconUserPlus, IconLogout } from "@tabler/icons-react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
+
 
 export function Navbar() {
   const { data: session } = useSession(); // Get authentication status
@@ -19,12 +20,6 @@ export function Navbar() {
           name: "Profile",
           link: "/profile",
           icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
-        },
-        {
-          name: "Logout",
-          link: "#",
-          icon: <IconLogout className="h-4 w-4 text-neutral-500 dark:text-white" />,
-          onClick: () => signOut(),
         },
       ]
     : [

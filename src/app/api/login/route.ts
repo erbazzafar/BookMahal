@@ -1,7 +1,8 @@
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/user.model";
-import { signIn } from "next-auth/react";
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/option";
 
 export async function POST (req: Request) {
     try {
@@ -19,16 +20,12 @@ export async function POST (req: Request) {
         }
 
         //un-comment after building next-auth/options.ts
-        // const result = await signIn( "credentials", {
-        //     redirect: false,
-        //     email,
-        //     password,
-        // })
+        const result = await NextAuth(authOptions)
 
-        // console.log("The result for SignIn with next-auth is :", result?.status);
-        // if (result?.error){
-        //     return NextResponse.json ({error: "Login Failed"}, {status: 401})
-        // }
+        console.log("The result for SignIn with next-auth is :", result?.status);
+        if (result?.error){
+            return NextResponse.json ({error: "Login Failed"}, {status: 401})
+        }
         else
         {
             return NextResponse.json({message: "Login Successful for ", user: {email: user.email}}, {status: 200})

@@ -10,9 +10,22 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+
 
 export default function DialogDemo() {
+
+  const {data: session} = useSession()
+  const router = useRouter()
+
+  useEffect(()=>{
+    if (!session){
+      console.log("No session Found !!!");
+      router.push("/login")
+    }
+  }, [session])
 
   const [book, setBook] = useState({
     title: "",
@@ -71,7 +84,7 @@ export default function DialogDemo() {
     }
 }
 
-  return (
+  return session ? (
     <Dialog>
       <DialogTrigger asChild>
         <button className="bg-gray-700 text-white px-4 py-2 rounded-md m-15 cursor-pointer ">Add Book</button>
@@ -100,7 +113,7 @@ export default function DialogDemo() {
             </div>
           ))}
         </div>
-
+        
         <DialogFooter>
           <button
             onClick={handleSubmit}
@@ -112,5 +125,7 @@ export default function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  ) : (
+    <p className="text-center mt-20 text-xl text-red-600"> You must be logged in to add the Book </p>
+  )
 }
