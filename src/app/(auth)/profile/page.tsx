@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 
 export default function DialogDemo() {
@@ -25,7 +26,7 @@ export default function DialogDemo() {
       console.log("No session Found !!!");
       router.push("/login")
     }
-  }, [session])
+  }, [session, router])
 
   const [book, setBook] = useState({
     title: "",
@@ -43,13 +44,14 @@ export default function DialogDemo() {
     }));
   };
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {image, title, genre, author, link} = book
     
     try {
         if(!image || !title || !genre || !author || !link){
-          alert("Please fill in all the fields")
+          alert("Please fill all the fields")
+          toast.error("Please fill all the fields")
           return
         }
         const response = await fetch("/api/book", {
@@ -66,7 +68,7 @@ export default function DialogDemo() {
         })
         console.log("Response while submitting the book: ",response);
         if (response.ok){
-          alert("Book added Successfully")
+          toast.success("Book added successfully")
           setBook({
             title: "",
             author: "",
@@ -76,7 +78,7 @@ export default function DialogDemo() {
           })
         }
         else{
-          alert("book not added")
+          toast.error("Unable to add the Book right now")
         }
 
     } catch (error) {
@@ -85,6 +87,12 @@ export default function DialogDemo() {
 }
 
   return session ? (
+    <>
+     <div className="mt-30 max-w-7xl mx-auto flex items-center justify-between bg-gray-100 py-4 px-6 shadow-md rounded-md">
+        <div>
+          <h1 className="text-2xl font-bold">{session.user?.firstname}</h1>
+          <p className="text-gray-600">{session.user?.email}</p>
+        </div>
     <Dialog>
       <DialogTrigger asChild>
         <button className="bg-gray-700 text-white px-4 py-2 rounded-md m-15 cursor-pointer ">Add Book</button>
@@ -125,7 +133,12 @@ export default function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    </div>
+    </>
   ) : (
     <p className="text-center mt-20 text-xl text-red-600"> You must be logged in to add the Book </p>
   )
+  
 }
+
+

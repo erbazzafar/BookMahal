@@ -2,10 +2,7 @@
 import LoginupFormDemo from '@/components/login-form'
 import React from 'react'
 
-interface Props {}
-
-function Page(props: Props) {
-    const {} = props
+function Page() {
 
     return (
         <div

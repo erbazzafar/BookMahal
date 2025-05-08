@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { IconHome, IconUser, IconLogin, IconUserPlus, IconLogout } from "@tabler/icons-react";
+import { IconHome, IconUser, IconUserPlus} from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 

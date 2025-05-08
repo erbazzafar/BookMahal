@@ -44,6 +44,7 @@ export default function OTPPage() {
             }
         } catch (err) {
             toast.error("Something went wrong. Please try again.");
+            console.log("Error: ", err)
         } finally {
             setLoading(false);
         }

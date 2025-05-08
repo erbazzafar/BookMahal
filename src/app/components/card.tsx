@@ -45,7 +45,7 @@ useEffect ( () => {
       {books.length === 0 ? (
         <p className="text-white text-center w-full">Loading books...</p>
       ) : (
-        books.map((book) => (
+        books.map((book: Book) => (
           <div key={book._id} className="flex justify-center">
             <div className="relative rounded-[22px] p-[2px] bg-gradient-to-r from-purple-500 via-blue-500 to-green-500">
               {/* Card Content */}

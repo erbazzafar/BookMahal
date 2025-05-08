@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
               return user;
 
             } catch (error: any) {
-              throw new Error("Error Signing In")
+              throw new Error("Error Signing In", error)
             }
           }
         }),
