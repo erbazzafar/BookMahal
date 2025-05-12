@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import Image from "next/image"
 
 export default function DialogDemo() {
 
@@ -169,6 +170,25 @@ useEffect( () => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    </div>
+
+    <div>
+      <h1 className="text-2xl font-bold text-center mt-10">Your Books</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+        {userBooks.map((book: any) => (
+          <div key={book._id} className="bg-white shadow-md rounded-lg p-4">
+            <Image 
+              src={book.book_Image} 
+              alt={book.book_Title}
+              width={50}
+              height={48}
+              className="w-full h-48 object-cover rounded-md mb-4" />
+            <h2 className="text-lg font-semibold">{book.book_Title}</h2>
+            <p className="text-gray-600">{book.book_Author}</p>
+            <p className="text-gray-600">{book.book_Genre}</p>
+          </div>
+        ))}
+      </div>
     </div>
     </>
   ) : (
