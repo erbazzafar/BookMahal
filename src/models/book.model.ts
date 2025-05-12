@@ -5,7 +5,8 @@ const bookSchema = new Schema ({
     book_Genre: { type: String, required: true},
     book_Author: { type: String, required: true},
     book_Image: { type:String, required: true},
-    book_Link: {type: String, required: true}
+    book_Link: {type: String, required: true},
+    userId: { type: mongoose.Schema.Types.ObjectId , ref: "User"},
 },
     {timestamps: true}
 )

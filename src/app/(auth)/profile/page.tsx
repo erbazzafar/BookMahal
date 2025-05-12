@@ -15,11 +15,15 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
-
 export default function DialogDemo() {
 
   const {data: session} = useSession()
   const router = useRouter()
+  const [userBooks, setUserBooks] = useState([])
+  console.log("session:", session);
+
+  const userId = session?.user?._id
+  
 
   useEffect(()=>{
     if (!session){
@@ -33,7 +37,8 @@ export default function DialogDemo() {
     author: "",
     image: "",
     genre: "",
-    link: ""
+    link: "",
+    userId: userId
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +69,8 @@ export default function DialogDemo() {
             book_Author: author,
             book_Genre: genre,
             book_Image: image,
-            book_Link: link})
+            book_Link: link,
+            userId: userId})
         })
         console.log("Response while submitting the book: ",response);
         if (response.ok){
@@ -74,7 +80,8 @@ export default function DialogDemo() {
             author: "",
             image: "",
             genre: "",
-            link: ""
+            link: "",
+            userId: userId,
           })
         }
         else{
@@ -85,6 +92,35 @@ export default function DialogDemo() {
        console.log("Error in adding book: ",error);
     }
 }
+
+useEffect( () => {
+ const fetUserBooks = async () => {
+  try {
+    if (!userId) {
+      console.log("User ID is not available");
+      return
+    }
+    const response = await fetch (`/api/book?id=${userId}`, {
+      method: "GET"
+    })
+
+    if (!response.ok) {
+      toast.error("Unable to fetch user books")
+      return
+    }
+
+    console.log("Response in fetching user books: ", response)
+    setUserBooks(await response.json())
+    
+  } catch (error) {
+    console.log("Error in fetching user books: ", error);
+    toast.error("Error in fetching user books")
+    return
+  }
+ }
+ fetUserBooks()
+}, [userId])
+
 
   return session ? (
     <>
