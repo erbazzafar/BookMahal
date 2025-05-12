@@ -14,15 +14,15 @@ export default function LoginupFormDemo() {
 
   const router = useRouter()
 
-  const handleEmail= (e) => {
+  const handleEmail= (e: any) => {
     setEmail(e.target.value)
   }
 
-  const handlePassword = (e) => {
+  const handlePassword = (e: any) => {
     setPassword(e.target.value)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       if (!email || !password) {

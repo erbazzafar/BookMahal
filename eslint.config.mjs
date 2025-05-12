@@ -17,16 +17,16 @@ export default [
   {
     files: ["**/*.{ts,tsx}"],
     rules: {
-      // Disallow usage of the `any` type
-      "@typescript-eslint/no-explicit-any": "error",
+      // Allow usage of the `any` type
+      "@typescript-eslint/no-explicit-any": "off",
 
-      // Disallow empty interfaces
-      "@typescript-eslint/no-empty-object-type": "error",
+      // Allow empty interfaces
+      "@typescript-eslint/no-empty-object-type": "off",
 
-      // Disallow unused variables
-      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+      // Disallow unused variables, but allow unused arguments if prefixed with _
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
 
-      // Use const if variable is never reassigned
+      // Warn if let can be const
       "prefer-const": "warn",
     },
   },

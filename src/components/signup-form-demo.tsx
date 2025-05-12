@@ -13,17 +13,17 @@ export default function SignupFormDemo() {
   const[email, setEmail] = useState("")
   const[password, setPassword] = useState("")
 
-  const handlePassword = (e) => { 
+  const handlePassword = (e: any) => { 
     setPassword(e.target.value)
   }
 
-  const handleFirstname = (e) => { 
+  const handleFirstname = (e: any) => { 
     setFirstname(e.target.value)
   }
-  const handleLastname = (e) => { 
+  const handleLastname = (e: any) => { 
     setLastname(e.target.value)
   }
-  const handleEmail = (e) => { 
+  const handleEmail = (e: any) => { 
     setEmail(e.target.value)
   }
   
