@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get('id')
 
     if (id) {
-      const book = await Book.findById(id)
+      const book = await Book.find({userId: id})
       if (!book) {
         return NextResponse.json({ error: 'Book not found' }, { status: 404 })
       }
